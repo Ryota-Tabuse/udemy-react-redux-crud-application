@@ -1,33 +1,38 @@
 // Reactはどこでも使われていない。
 // JSXはトランスコンパイルされる場合に、Reactが使用される。
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-const App = () => {
-  const profiles = [
-    { name: "Taro", age: 10},
-    { name: "Hanako", age: 5},
-    { name: "NoName", age: 2}
-  ];
-  return (
-    <div>
-      {
-        profiles.map((profile, index) => {
-          //変化のあるDOMしか変更しないため。
-          return <User name={profile.name} age={profile.age} key={index}/>
-        })
-      }
-    </div>
-  );
-}
+const App = () => (<Counter></Counter>)
 
-const User = (props) => {
-  return <div>Hi, I am {props.name}, and {props.age} years old!</div>
-}
+class Counter extends Component {
+  //初期化処理
+  constructor(props) {
+    super(props);
+    console.log(this.state);
+    this.state = { count: 0 }
+  }
 
-User.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number.isRequired
+  handlePlusButton = () => {
+    // setStateが実行されると、画面がレンダリングされる。
+    // そのコールバックにレンダリングがわかる。
+    this.setState({ count: this.state.count + 1 });
+  }
+
+  handleMinusButton = () => {
+    this.setState({ count: this.state.count - 1 });
+  }
+
+  render() {
+    console.log("render");
+    return (
+      <React.Fragment>
+        <div>counter: { this.state.count }</div>
+        <button onClick={this.handlePlusButton}>+1</button>
+        <button onClick={this.handleMinusButton}>-1</button>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
