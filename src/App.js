@@ -1,32 +1,31 @@
 // Reactはどこでも使われていない。
 // JSXはトランスコンパイルされる場合に、Reactが使用される。
 import React from 'react';
-// class App extends Component {
-//   //クラスコンポーネント
-//   render() {
-//     return(
-//       //一つのタグを返さないければならない。React.Fragment
-//       <React.Fragment>
-//         <label htmlFor="bar">bar</label>
-//         <input type="text" id="bar" onClick={() => {console.log("I am changed")}}/>
-//       </React.Fragment>
-//     );
-//   }
-// }
 
 const App = () => {
+  const profiles = [
+    { name: "Taro", age: 10},
+    { name: "Hanako", age: 10},
+    { name: "NoAge"}
+  ];
   return (
     <div>
-      <Cat />
-      <Cat />
-      <Cat />
-      <Cat />
+      {
+        profiles.map((profile, index) => {
+          //変化のあるDOMしか変更しないため。
+          return <User name={profile.name} age={profile.age} key={index}/>
+        })
+      }
     </div>
   );
 }
 
-const Cat = () => {
-  return <div>Meow!</div>
+const User = (props) => {
+  return <div>Hi, I am {props.name}, and {props.age} years old!</div>
+}
+
+User.defaultProps = {
+  age: 1
 }
 
 export default App;
